@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Will You Be My Valentine? 😎💖</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      background: linear-gradient(135deg, #ffe6f0, #ff99cc);
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      text-align: center;
+      height: 100vh;
+      overflow: hidden;
+      margin: 0;
+      padding-top: 50px;
+      color: #800040;
+    }
+
+    h1 {
+      font-size: 42px;
+      margin-bottom: 10px;
+      text-shadow: 2px 2px #ff4da6;
+    }
+
+    #message {
+      font-size: 20px;
+      margin: 5px 0 20px 0;
+      min-height: 24px;
+    }
+
+    button {
+      padding: 15px 35px;
+      font-size: 22px;
+      border: none;
+      border-radius: 14px;
+      cursor: pointer;
+      position: absolute;
+      transition: all 0.3s ease;
+      display: none;
+    }
+
+    #yes {
+      background-color: #ff4d88;
+      color: white;
+      left: 40%;
+      top: 65%;
+    }
+
+    #no {
+      background-color: #e0cce0;
+      color: #800040;
+      left: 55%;
+      top: 65%;
+    }
+
+    .heart {
+      position: absolute;
+      font-size: 24px;
+      animation: float 5s infinite;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(-800px); opacity: 0; }
+    }
+
+    .confetti {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Hey Sugar Plum 🍬🌸</h1>
+  <div id="message"></div>
+  <h1 id="question" style="display:none;">Will you be my Valentine? 😎💖</h1>
+
+  <button id="yes" onmouseover="danceYes()" onclick="sayYes()">YES 💃</button>
+  <button id="no" onmouseover="shrinkNo()">NO 😏</button>
+
+  <!-- Upbeat fun music -->
+  <audio autoplay loop>
+    <source src="https://www.bensound.com/bensound-music/bensound-happyrock.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    const message = document.getElementById("message");
+    const question = document.getElementById("question");
+    const yesBtn = document.getElementById("yes");
+    const noBtn = document.getElementById("no");
+
+    const introText = "Every moment with you fills my heart with joy… I just have to ask this important question:";
+
+    let i = 0;
+    function typeMessage() {
+      if (i < introText.length) {
+        message.innerHTML += introText.charAt(i);
+        i++;
+        setTimeout(typeMessage, 50); // typing speed
+      } else {
+        // Show question and buttons
+        question.style.display = "block";
+        yesBtn.style.display = "inline-block";
+        noBtn.style.display = "inline-block";
+      }
+    }
+    typeMessage();
+
+    // YES button dances
+    function danceYes() {
+      yesBtn.style.transform = `rotate(${Math.random()*20-10}deg) scale(1.1)`;
+      setTimeout(() => { yesBtn.style.transform = "rotate(0deg) scale(1)"; }, 300);
+    }
+
+    // NO button shrinks and moves
+    function shrinkNo() {
+      let w = noBtn.offsetWidth;
+      let h = noBtn.offsetHeight;
+      if (w > 40) {
+        noBtn.style.width = w * 0.8 + "px";
+        noBtn.style.height = h * 0.8 + "px";
+      }
+      const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+      const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+      noBtn.style.left = x + "px";
+      noBtn.style.top = y + "px";
+    }
+
+    // Floating hearts
+    setInterval(() => {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.innerHTML = "❤️";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.top = "100vh";
+      heart.style.fontSize = Math.random() * 20 + 20 + "px";
+      document.body.appendChild(heart);
+      setTimeout(() => { heart.remove(); }, 5000);
+    }, 500);
+
+    // Confetti and sparkling hearts on YES
+    function sayYes() {
+      for (let i = 0; i < 80; i++) {
+        const confetti = document.createElement("div");
+        confetti.className = "confetti";
+        confetti.style.left = Math.random() * window.innerWidth + "px";
+        confetti.style.top = Math.random() * window.innerHeight + "px";
+        confetti.style.backgroundColor = `hsl(${Math.random()*360}, 100%, 70%)`;
+        confetti.style.width = confetti.style.height = Math.random()*8 + 6 + "px";
+        document.body.appendChild(confetti);
+        setTimeout(() => { confetti.remove(); }, 3000);
+      }
+
+      for (let i = 0; i < 30; i++) {
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        heart.innerHTML = "💖";
+        heart.style.left = Math.random() * window.innerWidth + "px";
+        heart.style.top = Math.random() * window.innerHeight + "px";
+        heart.style.fontSize = Math.random()*30 + 20 + "px";
+        document.body.appendChild(heart);
+        setTimeout(() => { heart.remove(); }, 4000);
+      }
+
+      document.body.innerHTML += `
+        <h1>YAAAY! 💖🥰</h1>
+        <p>My Sugar Plum said YES! 😍</p>
+        <h2>Monjolajesu, let's cruise through life together ❤️</h2>
+        <h3>Can't wait to celebrate this Valentine’s with you 😘</h3>
+        <p style="margin-top:30px; font-size:18px;">From your [Your Name]</p>
+      `;
+    }
+  </script>
+
+</body>
+</html>
