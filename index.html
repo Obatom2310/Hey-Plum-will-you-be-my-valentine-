@@ -2,176 +2,191 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Will You Be My Valentine? 😎💖</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>For My Sugar Plum 💖</title>
+
   <style>
     body {
-      background: linear-gradient(135deg, #ffe6f0, #ff99cc);
-      font-family: 'Comic Sans MS', cursive, sans-serif;
-      text-align: center;
-      height: 100vh;
-      overflow: hidden;
       margin: 0;
-      padding-top: 50px;
-      color: #800040;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+      color: #4a1c2f;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 30px 20px;
+      border-radius: 20px;
+      max-width: 400px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+      z-index: 2;
     }
 
     h1 {
-      font-size: 42px;
+      font-size: 1.8em;
       margin-bottom: 10px;
-      text-shadow: 2px 2px #ff4da6;
     }
 
-    #message {
-      font-size: 20px;
-      margin: 5px 0 20px 0;
-      min-height: 24px;
+    p {
+      font-size: 1em;
+      line-height: 1.6;
+    }
+
+    .buttons {
+      margin-top: 25px;
+      position: relative;
+      height: 80px;
     }
 
     button {
-      padding: 15px 35px;
-      font-size: 22px;
+      padding: 12px 25px;
+      font-size: 1em;
+      border-radius: 25px;
       border: none;
-      border-radius: 14px;
       cursor: pointer;
+      margin: 10px;
       position: absolute;
-      transition: all 0.3s ease;
-      display: none;
     }
 
-    #yes {
-      background-color: #ff4d88;
+    .yes {
+      background-color: #e6397e;
       color: white;
-      left: 40%;
-      top: 65%;
+      left: 50%;
+      transform: translateX(-110%);
     }
 
-    #no {
-      background-color: #e0cce0;
-      color: #800040;
-      left: 55%;
-      top: 65%;
+    .no {
+      background-color: #ccc;
+      color: #333;
+      left: 50%;
+      transform: translateX(10%);
     }
 
+    .signature {
+      margin-top: 25px;
+      font-style: italic;
+    }
+
+    /* Floating hearts */
     .heart {
-      position: absolute;
-      font-size: 24px;
-      animation: float 5s infinite;
+      position: fixed;
+      bottom: -10px;
+      font-size: 20px;
+      animation: floatUp 6s linear infinite;
+      opacity: 0.7;
     }
 
-    @keyframes float {
-      0% { transform: translateY(0); opacity: 1; }
-      100% { transform: translateY(-800px); opacity: 0; }
+    @keyframes floatUp {
+      0% { transform: translateY(0); opacity: 0.7; }
+      100% { transform: translateY(-110vh); opacity: 0; }
     }
 
+    /* Confetti */
     .confetti {
-      position: absolute;
-      width: 10px;
-      height: 10px;
-      pointer-events: none;
+      position: fixed;
+      top: 0;
+      width: 8px;
+      height: 14px;
+      animation: fall 3s linear forwards;
+      z-index: 999;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
     }
   </style>
 </head>
+
 <body>
 
-  <h1>Hey Sugar Plum 🍬🌸</h1>
-  <div id="message"></div>
-  <h1 id="question" style="display:none;">Will you be my Valentine? 😎💖</h1>
-
-  <button id="yes" onmouseover="danceYes()" onclick="sayYes()">YES 💃</button>
-  <button id="no" onmouseover="shrinkNo()">NO 😏</button>
-
-  <!-- Upbeat fun music -->
+  <!-- Background Music -->
   <audio autoplay loop>
-    <source src="https://www.bensound.com/bensound-music/bensound-happyrock.mp3" type="audio/mpeg">
+    <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mpeg">
   </audio>
 
+  <div class="card">
+    <h1>Monjolajesu 💕</h1>
+
+    <p>
+      Hey my Sugar Plum,<br><br>
+      I’ve been thinking about us — the laughter, the calm,
+      the way you make everything feel softer and warmer.
+    </p>
+
+    <p><strong>You truly mean so much to me.</strong></p>
+
+    <p>So here I am, asking you in my own little way…</p>
+
+    <h2>Will you be my Valentine? 💖</h2>
+
+    <div class="buttons">
+      <button class="yes" onclick="celebrateAndSend()">YES 💘</button>
+      <button class="no" onmouseover="moveNo()">NO 🙈</button>
+    </div>
+
+    <p style="font-size: 0.85em; opacity: 0.8;">
+      (Clicking YES sends me a message 💌)
+    </p>
+
+    <div class="signature">
+      <p>With love,<br><strong>From Obatom 💙</strong></p>
+    </div>
+  </div>
+
   <script>
-    const message = document.getElementById("message");
-    const question = document.getElementById("question");
-    const yesBtn = document.getElementById("yes");
-    const noBtn = document.getElementById("no");
-
-    const introText = "Every moment with you fills my heart with joy… I just have to ask this important question:";
-
-    let i = 0;
-    function typeMessage() {
-      if (i < introText.length) {
-        message.innerHTML += introText.charAt(i);
-        i++;
-        setTimeout(typeMessage, 50); // typing speed
-      } else {
-        // Show question and buttons
-        question.style.display = "block";
-        yesBtn.style.display = "inline-block";
-        noBtn.style.display = "inline-block";
-      }
-    }
-    typeMessage();
-
-    // YES button dances
-    function danceYes() {
-      yesBtn.style.transform = `rotate(${Math.random()*20-10}deg) scale(1.1)`;
-      setTimeout(() => { yesBtn.style.transform = "rotate(0deg) scale(1)"; }, 300);
+    // WhatsApp + confetti
+    function celebrateAndSend() {
+      launchConfetti();
+      setTimeout(sendWhatsApp, 1200);
     }
 
-    // NO button shrinks and moves
-    function shrinkNo() {
-      let w = noBtn.offsetWidth;
-      let h = noBtn.offsetHeight;
-      if (w > 40) {
-        noBtn.style.width = w * 0.8 + "px";
-        noBtn.style.height = h * 0.8 + "px";
-      }
-      const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
-      const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
-      noBtn.style.left = x + "px";
-      noBtn.style.top = y + "px";
+    function sendWhatsApp() {
+      const phoneNumber = "2348160869276";
+      const message = encodeURIComponent(
+        "Yes Obatom 🥰 I’ll be your Valentine. Sugar Plum is officially taken 💖"
+      );
+      window.location.href = `https://wa.me/${phoneNumber}?text=${message}`;
+    }
+
+    // NO button runs away
+    function moveNo() {
+      const noBtn = document.querySelector('.no');
+      const x = Math.random() * 200 - 100;
+      const y = Math.random() * 80 - 40;
+      noBtn.style.transform = `translate(${x}px, ${y}px)`;
     }
 
     // Floating hearts
     setInterval(() => {
-      const heart = document.createElement("div");
-      heart.className = "heart";
-      heart.innerHTML = "❤️";
-      heart.style.left = Math.random() * 100 + "vw";
-      heart.style.top = "100vh";
-      heart.style.fontSize = Math.random() * 20 + 20 + "px";
+      const heart = document.createElement('div');
+      heart.className = 'heart';
+      heart.innerHTML = '💖';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
       document.body.appendChild(heart);
-      setTimeout(() => { heart.remove(); }, 5000);
+      setTimeout(() => heart.remove(), 7000);
     }, 500);
 
-    // Confetti and sparkling hearts on YES
-    function sayYes() {
-      for (let i = 0; i < 80; i++) {
-        const confetti = document.createElement("div");
-        confetti.className = "confetti";
-        confetti.style.left = Math.random() * window.innerWidth + "px";
-        confetti.style.top = Math.random() * window.innerHeight + "px";
-        confetti.style.backgroundColor = `hsl(${Math.random()*360}, 100%, 70%)`;
-        confetti.style.width = confetti.style.height = Math.random()*8 + 6 + "px";
+    // Confetti burst
+    function launchConfetti() {
+      for (let i = 0; i < 40; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        confetti.style.left = Math.random() * 100 + 'vw';
+        confetti.style.backgroundColor =
+          ['#e6397e', '#ffb703', '#fb8500', '#8338ec'][Math.floor(Math.random() * 4)];
+        confetti.style.animationDuration = (Math.random() * 1.5 + 2) + 's';
         document.body.appendChild(confetti);
-        setTimeout(() => { confetti.remove(); }, 3000);
+        setTimeout(() => confetti.remove(), 3000);
       }
-
-      for (let i = 0; i < 30; i++) {
-        const heart = document.createElement("div");
-        heart.className = "heart";
-        heart.innerHTML = "💖";
-        heart.style.left = Math.random() * window.innerWidth + "px";
-        heart.style.top = Math.random() * window.innerHeight + "px";
-        heart.style.fontSize = Math.random()*30 + 20 + "px";
-        document.body.appendChild(heart);
-        setTimeout(() => { heart.remove(); }, 4000);
-      }
-
-      document.body.innerHTML += `
-        <h1>YAAAY! 💖🥰</h1>
-        <p>My Sugar Plum said YES! 😍</p>
-        <h2>Monjolajesu, let's cruise through life together ❤️</h2>
-        <h3>Can't wait to celebrate this Valentine’s with you 😘</h3>
-        <p style="margin-top:30px; font-size:18px;">From Obatom ❤️</p>
-      `;
     }
   </script>
 
